@@ -1,0 +1,32 @@
+--- a/src/wl_window.c
++++ b/src/wl_window.c
+@@ -2117,8 +2117,7 @@
+ void _glfwSetWindowIconWayland(_GLFWwindow* window,
+                                int count, const GLFWimage* images)
+ {
+-    _glfwInputError(GLFW_FEATURE_UNAVAILABLE,
+-                    "Wayland: The platform does not support setting the window icon");
++    fprintf(stderr, "!!! Ignoring Error: Wayland: Setting window icon not supported\n");
+ }
+ 
+ void _glfwGetWindowPosWayland(_GLFWwindow* window, int* xpos, int* ypos)
+@@ -2361,8 +2360,7 @@
+ 
+ void _glfwFocusWindowWayland(_GLFWwindow* window)
+ {
+-    _glfwInputError(GLFW_FEATURE_UNAVAILABLE,
+-                    "Wayland: The platform does not support setting the input focus");
++    fprintf(stderr, "!!! Ignoring Error: Wayland: Cannot focus window programmatically\n");
+ }
+ 
+ void _glfwSetWindowMonitorWayland(_GLFWwindow* window,
+@@ -2542,8 +2540,7 @@
+ 
+ void _glfwSetCursorPosWayland(_GLFWwindow* window, double x, double y)
+ {
+-    _glfwInputError(GLFW_FEATURE_UNAVAILABLE,
+-                    "Wayland: The platform does not support setting the cursor position");
++    fprintf(stderr, "!!! Ignoring Error: Wayland: cannot set cursor position\n");
+ }
+ 
+ void _glfwSetCursorModeWayland(_GLFWwindow* window, int mode)
