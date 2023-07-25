@@ -6,7 +6,7 @@
 # Contributor: SpepS <dreamspepser at yahoo dot it>
 
 pkgbase=glfw
-pkgname=('glfw-x11' 'glfw-wayland' 'glfw-doc')
+pkgname=('glfw-wayland-minecraft-git')
 REV='3fa2360720eeba1964df3c0ecf4b5df8648a8e52'
 pkgver="r1.$REV"
 pkgrel=1
@@ -27,7 +27,7 @@ sha512sums=('21401c38477110a0471deb240b9e459a858b168568ab9d9361f85ec4e5a10ed9417
 
 prepare() {
   cd "$srcdir/$pkgbase-$REV"
-  mkdir build-x11 build-wayland
+  mkdir build-wayland
 
   for patch in "$srcdir/"*.patch; do
     echo "Applying patch $patch"
@@ -36,15 +36,7 @@ prepare() {
 }
 
 build() {
-  cd "$srcdir/$pkgbase-$REV/build-x11"
-
-  cmake .. \
-      -DCMAKE_INSTALL_PREFIX=/usr \
-      -DCMAKE_INSTALL_LIBDIR=lib \
-      -DBUILD_SHARED_LIBS=ON
-  make docs
-
-  cd ../build-wayland
+  cd "$srcdir/$pkgbase-$REV/build-wayland"
 
   cmake .. \
       -DCMAKE_INSTALL_PREFIX=/usr \
@@ -53,22 +45,7 @@ build() {
       -DGLFW_USE_WAYLAND=ON
 }
 
-package_glfw-x11() {
-  pkgdesc="A free, open source, portable framework for graphical application development (x11)"
-  depends=('libxi' 'libxrandr' 'libxinerama' 'libxcursor' 'libgl')
-  replaces=('glfw')
-  conflicts=('glfw')
-  provides=("glfw=$pkgver")
-
-  cd "$srcdir/$pkgbase-$REV"/build-x11
-
-  make DESTDIR=$pkgdir install
-
-  cd ..
-  install -Dm644 LICENSE.md "$pkgdir/usr/share/licenses/$pkgname/LICENSE.md"
-}
-
-package_glfw-wayland() {
+package_glfw-wayland-minecraft-git() {
   pkgdesc="A free, open source, portable framework for graphical application development (wayland)"
   depends=('wayland' 'libxkbcommon' 'libgl')
   conflicts=('glfw')
@@ -80,11 +57,4 @@ package_glfw-wayland() {
 
   cd ..
   install -Dm644 LICENSE.md "$pkgdir/usr/share/licenses/$pkgname/LICENSE.md"
-}
-
-package_glfw-doc() {
-  pkgdesc="Set of HTML documentation for GLFW"
-
-  mkdir -p "${pkgdir}/usr/share/doc/glfw/"
-  cp -r "${srcdir}/glfw-${REV}/build-x11/docs/html" "${pkgdir}/usr/share/doc/glfw"
 }
